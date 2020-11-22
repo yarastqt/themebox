@@ -1,20 +1,10 @@
 {
   "version": 2,
-  "alias": ["themebox.now.sh"],
-  "routes": [
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/api/v2/build",
-      "dest": "/api/build.ts",
-      "methods": ["OPTIONS", "POST"],
-      "headers": {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "OPTIONS,POST",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
+      "source": "/build",
+      "destination": "/api/build"
     }
   ]
 }
