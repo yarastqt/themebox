@@ -3,6 +3,10 @@
   "alias": ["themebox.now.sh"],
   "routes": [
     {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
       "src": "/build",
       "dest": "/api/build.ts",
       "methods": ["OPTIONS", "POST"],
