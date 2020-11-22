@@ -2,7 +2,9 @@
   "name": "themebox",
   "version": "0.0.1",
   "author": "Eugene Tropin <yarastqt@gmail.com>",
+  "description": "themekit as lambda function",
   "license": "MPL-2.0",
+  "repository": "https://github.com/yarastqt/themebox",
   "scripts": {
     "start": "vercel dev"
   },
