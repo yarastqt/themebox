@@ -7,7 +7,7 @@
       "dest": "/index.html"
     },
     {
-      "src": "/build",
+      "src": "/api/build",
       "dest": "/api/build.ts",
       "methods": ["OPTIONS", "POST"],
       "headers": {
