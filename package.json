@@ -4,6 +4,10 @@
   "author": "Eugene Tropin <yarastqt@gmail.com>",
   "license": "MPL-2.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "vercel dev"
+  },
+  "devDependencies": {
+    "@vercel/node": "1.8.5",
+    "vercel": "21.0.0"
   }
 }
