@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "alias": ["themebox.now.sh"],
   "routes": [
     {
       "src": "/build",
