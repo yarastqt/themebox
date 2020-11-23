@@ -1,7 +1,46 @@
 import { NowRequest, NowResponse } from '@vercel/node'
 
-async function build(req: NowRequest, res: NowResponse): Promise<void> {
-  res.json({ data: 'data' })
+import { withOptionsRequest } from '../lib/withOptionsRequest'
+import { parseContent } from '../lib/parseContent'
+import { enableSilentConsole } from '../lib/enableSilentConsole'
+import { buildThemekit } from '../lib/themekit'
+
+enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  OK = 200,
 }
 
-export default build
+function validateBodyRequest(body: any): boolean {
+  return (
+    body !== undefined
+    && body.tokens !== undefined
+    && body.config !== undefined
+  )
+}
+
+async function build(req: NowRequest, res: NowResponse): Promise<void> {
+  enableSilentConsole()
+
+  if (!validateBodyRequest(req.body)) {
+    res
+      .status(HTTP_CODE.BAD_REQUEST)
+      .json({ error: 'Config or tokens are empty.', success: false })
+    return
+  }
+
+  try {
+    const tokens = parseContent(req.body.tokens.content, req.body.tokens.language)
+    const config = parseContent(req.body.config, 'json')
+    const data = await buildThemekit(config, tokens)
+
+    res
+      .status(HTTP_CODE.OK)
+      .json({ data, success: true })
+  } catch (error) {
+    res
+      .status(HTTP_CODE.BAD_REQUEST)
+      .json({ error: error.message, success: false })
+  }
+}
+
+export default withOptionsRequest(build)
