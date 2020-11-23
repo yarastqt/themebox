@@ -1,14 +1,16 @@
-/**
- * Disable all stdout from console.
- */
-export function enableSilentConsole() {
-  const nullProxy = new Proxy(console.log, {
+function createNullProxy(target: any): any {
+  return new Proxy(target, {
     apply() {
       return null
     },
   })
+}
 
-  console.log = nullProxy
-  console.warn = nullProxy
-  console.error = nullProxy
+/**
+ * Disable all stdout from console.
+ */
+export function enableSilentConsole() {
+  console.log = createNullProxy(console.log)
+  console.warn = createNullProxy(console.warn)
+  console.error = createNullProxy(console.error)
 }
