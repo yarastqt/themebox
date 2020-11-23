@@ -6,6 +6,8 @@ import { createStyleDictionaryConfig } from '@yandex/themekit/lib/core/style-dic
 import { glob } from './glob'
 import { mockFile } from './mockFile'
 
+export { version } from '@yandex/themekit/package.json'
+
 // Extends themekit module with internal API.
 declare module '@yandex/themekit' {
   export const InternalApi: any

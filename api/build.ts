@@ -3,7 +3,7 @@ import { NowRequest, NowResponse } from '@vercel/node'
 import { withOptionsRequest } from '../lib/withOptionsRequest'
 import { parseContent } from '../lib/parseContent'
 import { enableSilentConsole } from '../lib/enableSilentConsole'
-import { buildThemekit } from '../lib/themekit'
+import { buildThemekit, version } from '../lib/themekit'
 
 enum HTTP_CODE {
   BAD_REQUEST = 400,
@@ -35,11 +35,11 @@ async function build(req: NowRequest, res: NowResponse): Promise<void> {
 
     res
       .status(HTTP_CODE.OK)
-      .json({ data, success: true })
+      .json({ data, success: true, meta: { themekit: version } })
   } catch (error) {
     res
       .status(HTTP_CODE.BAD_REQUEST)
-      .json({ error: error.message, success: false })
+      .json({ error: error.message, success: false, meta: { themekit: version } })
   }
 }
 
