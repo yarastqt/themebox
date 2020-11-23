@@ -3,13 +3,13 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/build",
+      "source": "/",
       "destination": "/api/build"
     }
   ],
   "headers": [
     {
-      "source": "/build",
+      "source": "/",
       "headers" : [
         {
           "key" : "Access-Control-Allow-Origin",
