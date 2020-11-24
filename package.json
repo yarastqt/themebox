@@ -7,7 +7,7 @@
   "license": "MPL-2.0",
   "repository": "https://github.com/yarastqt/themebox",
   "scripts": {
-    "format:js": "prettier --write src/**/*.ts",
+    "format:js": "prettier --write {api,lib}/**/*.ts",
     "lint:js": "eslint --ext .ts,.js .",
     "start": "vercel dev"
   },
