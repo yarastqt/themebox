@@ -7,6 +7,7 @@ import mockFs from 'mock-fs'
  * @param filename - Module filename
  */
 function patchResolveFilename(filename: string): void {
+  // eslint-disable-next-line no-extra-semi
   ;(Module as any)._resolveFilename = new Proxy((Module as any)._resolveFilename, {
     apply(target, thisArg, args) {
       if (args[0].startsWith(filename)) {
