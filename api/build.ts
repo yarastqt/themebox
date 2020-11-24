@@ -11,20 +11,14 @@ enum HTTP_CODE {
 }
 
 function validateBodyRequest(body: any): boolean {
-  return (
-    body !== undefined
-    && body.tokens !== undefined
-    && body.config !== undefined
-  )
+  return body !== undefined && body.tokens !== undefined && body.config !== undefined
 }
 
 async function build(req: NowRequest, res: NowResponse): Promise<void> {
   enableSilentConsole()
 
   if (!validateBodyRequest(req.body)) {
-    res
-      .status(HTTP_CODE.BAD_REQUEST)
-      .json({ error: 'Config or tokens are empty.', success: false })
+    res.status(HTTP_CODE.BAD_REQUEST).json({ error: 'Config or tokens are empty.', success: false })
     return
   }
 
@@ -33,9 +27,7 @@ async function build(req: NowRequest, res: NowResponse): Promise<void> {
     const config = parseContent(req.body.config, 'json')
     const data = await buildThemekit(config, tokens)
 
-    res
-      .status(HTTP_CODE.OK)
-      .json({ data, success: true, meta: { themekit: version } })
+    res.status(HTTP_CODE.OK).json({ data, success: true, meta: { themekit: version } })
   } catch (error) {
     res
       .status(HTTP_CODE.BAD_REQUEST)

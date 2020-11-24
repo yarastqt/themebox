@@ -20,6 +20,8 @@ export function parseContent(content: string, format: Format): any {
     case 'yaml':
       return YAML.parse(content)
     default:
-      throw new Error(`Unexpected format "${format}" for parsing, please choose json or yaml format.`)
+      throw new Error(
+        `Unexpected format "${format}" for parsing, please choose json or yaml format.`,
+      )
   }
 }
