@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs'
 import { join, extname, basename } from 'path'
-import { InternalApi } from '@yandex/themekit'
+import { Api, InternalApi } from '@yandex/themekit'
 import { createStyleDictionaryConfig } from '@yandex/themekit/lib/core/style-dictionary-config'
 
 import { glob } from './glob'
@@ -27,6 +27,23 @@ type Result = {
  */
 export async function buildThemekit(config: any, tokens: any): Promise<Result[]> {
   mockFile('tokens.json', JSON.stringify(tokens))
+
+  // TODO: Register this format in themekit.
+  Api.registerFormat({
+    name: 'json/extended',
+    formatter(dictionary) {
+      const result: Record<string, any> = {}
+      for (const prop of dictionary.allProperties) {
+        result[prop.name] = {
+          name: prop.name,
+          value: prop.value,
+          path: prop.path,
+          comment: prop.comment,
+        }
+      }
+      return JSON.stringify(result, null, 2)
+    },
+  })
 
   InternalApi.extend(
     createStyleDictionaryConfig({
