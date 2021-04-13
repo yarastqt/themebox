@@ -24,8 +24,13 @@ type Result = {
  *
  * @param config - Themekit config
  * @param tokens - Tokens object
+ * @param mappings - Mappings object
  */
-export async function buildThemekit(config: any, tokens: any): Promise<Result[]> {
+export async function buildThemekit(
+  config: any,
+  tokens: any,
+  mappings: Record<string, string> = {},
+): Promise<Result[]> {
   mockFile('tokens.json', JSON.stringify(tokens))
 
   // TODO: Register this format in themekit.
@@ -42,6 +47,14 @@ export async function buildThemekit(config: any, tokens: any): Promise<Result[]>
         }
       }
       return JSON.stringify(result, null, 2)
+    },
+  })
+
+  Api.registerTransform({
+    name: 'json/extended/mapper',
+    type: 'name',
+    transformer: (prop) => {
+      return mappings[prop.name] || prop.name
     },
   })
 
