@@ -1,7 +1,8 @@
-import { readFileSync } from 'fs'
-import { join, extname, basename } from 'path'
+import { join, extname, basename, resolve } from 'path'
 import { Api, InternalApi } from '@yandex/themekit'
 import { createStyleDictionaryConfig } from '@yandex/themekit/lib/core/style-dictionary-config'
+import cssColorFn from 'css-color-function'
+import { readFileSync, writeFileSync } from 'fs'
 
 import { glob } from './glob'
 import { mockFile } from './mockFile'
@@ -32,6 +33,23 @@ export async function buildThemekit(
   mappings: Record<string, string> = {},
 ): Promise<Result[]> {
   mockFile('tokens.json', JSON.stringify(tokens))
+
+  Api.registerAction({
+    name: 'process-color',
+    do: (_, config) => {
+      for (const file of config.files) {
+        const filePath = resolve(process.cwd(), config.buildPath, file.destination)
+        const colorRe = /color\(.+\)/g
+        let content = readFileSync(filePath, 'utf8')
+        let executed = null
+        while ((executed = colorRe.exec(content)) !== null) {
+          content = content.replace(executed[0], cssColorFn.convert(executed[0]))
+        }
+        writeFileSync(filePath, content)
+      }
+    },
+    undo: () => {},
+  })
 
   // TODO: Register this format in themekit.
   Api.registerFormat({
