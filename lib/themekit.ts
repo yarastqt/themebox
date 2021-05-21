@@ -60,6 +60,7 @@ export async function buildThemekit(
         result[prop.name] = {
           name: prop.name,
           value: prop.value,
+          rawValue: prop.original.value,
           path: prop.path,
           comment: prop.comment,
         }
