@@ -56,12 +56,13 @@ export async function buildThemekit(
     name: 'json/extended',
     formatter(dictionary) {
       const result: Record<string, any> = {}
-      for (const { name, value, path, comment } of dictionary.allProperties) {
-        result[name] = {
-          value,
-          path,
-          comment,
-          name,
+      for (const prop of dictionary.allProperties) {
+        result[prop.name] = {
+          name: prop.name,
+          value: prop.value,
+          path: prop.path,
+          comment: prop.comment,
+          rawValue: prop.original.value,
         }
       }
       return JSON.stringify(result, null, 2)
