@@ -39,7 +39,7 @@ export async function buildThemekit(
     do: (_, config) => {
       for (const file of config.files) {
         const filePath = resolve(process.cwd(), config.buildPath, file.destination)
-        const colorRe = /color\(.+\)/g
+        const colorRe = /color\((?!{).+\)/g
         let content = readFileSync(filePath, 'utf8')
         let executed = null
         while ((executed = colorRe.exec(content)) !== null) {
